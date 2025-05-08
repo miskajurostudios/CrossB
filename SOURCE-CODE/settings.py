@@ -1,14 +1,20 @@
+#------------------------------------------#
+# CrossB Made by Miska Juro Studios (2025) #
+#------------------------------------------#
+
 import customtkinter as CTk
 import sys
 import os
 
-if getattr(sys, 'frozen', False):
+# Gets releative path
+if getattr(sys, 'frozen', False): # It's diffrent from .py and .exe
     rel_path = os.path.dirname(sys.executable)
 else:
     rel_path = os.path.dirname(__file__)
 
 rel_path_inner = os.path.dirname(__file__)
 
+# initiliazises tkitner window
 root = CTk.CTk()
 root.geometry("350x430")
 root.title("CrossB - Control Panel")
@@ -16,9 +22,21 @@ root._set_appearance_mode("dark")
 root.iconbitmap(fr"{rel_path_inner}\Assets\CrossB.ico")
 
 
+# This function stops users from typing into ComboBoxes (used in "eCrossType")
 def block_typing(event):
     return "break" 
 
+#----------------------#
+#          UI          #
+#----------------------#
+
+# the Repeating elements are these-
+#
+#     etElement = ...
+#     eElement = ...
+#
+# Basicly et- is a title (eg.: "Crosshair Type")
+# and e- is the actuall element where you choose an option (eg.: "ComboBox")
 
 eTitle = CTk.CTkLabel(master=root, text='CrossB Settings', font=('Constantia', 30))
 eTitle.pack(anchor='s', pady=10)
@@ -55,18 +73,21 @@ eOffsetY.pack(side="left", padx=5)
 eOffsetX = CTk.CTkEntry(master=ecOffset, width=125, placeholder_text="(X) eg.: -5")
 eOffsetX.pack(side="left", padx=5)
 
+# Save button, Calls function SaveSettings() - further in this program
 
 eSaveSettings = CTk.CTkButton(master=root, width=250, text='Save', fg_color="#33a31a", hover_color="#2a8716", cursor="hand2",
                               command=lambda: SaveSettings(eCrossType.get(), eBindKey.get(), eBindKeySettings.get(), eExitKey.get(), eOffsetX.get(), eOffsetY.get()))
 eSaveSettings.pack(anchor='s', pady=20)
 
-### LOAD FUNCTION ###
+# (↓↓↓ These two functions [LoadSettings and SaveSettings] are not really made efficent, I know that I cloud make ut just better... Yea I'm just lazy :D)
 
+### LOAD FUNCTION ###
 def LoadSettings():
     global CrossType, CrossKey, SettingsKey, ExitKey, OffsetX, OffsetY
 
     directory = fr"{rel_path}\Settings"
 
+    # These are the default values, if there aren't found any saved ones.
     CrossType = "White crosshair"
     CrossKey = "Shift+F8"
     SettingsKey = "Control+Shift+F8"
@@ -75,7 +96,7 @@ def LoadSettings():
     OffsetX = "0"
     OffsetY = "0"
 
-    if os.path.exists(fr"{directory}\CrossType.set"):
+    if os.path.exists(fr"{directory}\CrossType.set"): # this (and others) loads a file...
         with open(fr"{directory}\CrossType.set", "r") as f:
             CrossType = f.read()
     else:
@@ -125,12 +146,11 @@ def LoadSettings():
 LoadSettings()
 
 ### SAVE FUNCTION ###
-
 def SaveSettings(CrossType, BindKey, BindKeySettings, ExitKey, OffsetX, OffsetY):
 
     os.makedirs(fr"{rel_path}\Settings", exist_ok=True)
 
-    with open(fr"{rel_path}\Settings\CrossType.set", "w") as f:
+    with open(fr"{rel_path}\Settings\CrossType.set", "w") as f: # this (and others) writes the files
         f.write(CrossType)
 
     with open(fr"{rel_path}\Settings\CrossKey.set", "w") as f:
@@ -141,8 +161,6 @@ def SaveSettings(CrossType, BindKey, BindKeySettings, ExitKey, OffsetX, OffsetY)
 
     with open(fr"{rel_path}\Settings\ExitKey.set", "w") as f:
         f.write(ExitKey)
-    
-    ###
 
     with open(fr"{rel_path}\Settings\OffsetX.set", "w") as f:
         f.write(OffsetX)

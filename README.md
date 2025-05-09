@@ -3,6 +3,9 @@ CrossB is a open-source software that I made, It just basicly makes Crosshair on
 there are multiple versions of it; 3 diffrent colors and 3 diffrent types.
 You can adjust the X and Y position however you want.
 
+# Download
+You can download CrossB ![here](https://github.com/miskajurostudios/CrossB/releases).
+
 ### There are default Key Shortcuts:
 Toggle Cross - Shift + F8
 Open Settings - Ctrl + Shift + F8
